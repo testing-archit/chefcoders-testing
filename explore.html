@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartChef - Explore Recipes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --background-color: #f8f9fa;
+            --text-color: #2d3436;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .explore-recipes {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .welcome-banner {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-banner h2 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .welcome-banner p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .recipe-content {
+            padding: 1.5rem;
+        }
+
+        .recipe-card h3 {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .recipe-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .recipe-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .recipe-actions button {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.3s ease;
+        }
+
+        .recipe-actions button:hover {
+            color: var(--primary-color);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            background: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            margin-top: 4rem;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .explore-recipes {
+                padding: 1rem;
+            }
+
+            .recipe-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-utensils"></i> Explore AI-Generated Recipes</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="generate.html"><i class="fas fa-magic"></i> AI Recipe Generator</a></li>
+                <li><a href="explore.html"><i class="fas fa-search"></i> Explore Recipes</a></li>
+                <li><a href="signup.html"><i class="fas fa-user-plus"></i> Signup</a></li>
+                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="explore-recipes">
+        <div class="welcome-banner">
+            <h2>Discover Amazing Recipes</h2>
+            <p>Explore our collection of AI-generated recipes crafted just for you</p>
+        </div>
+
+        <div class="filters">
+            <button class="filter-button"><i class="fas fa-filter"></i> All Recipes</button>
+            <button class="filter-button"><i class="fas fa-leaf"></i> Vegetarian</button>
+            <button class="filter-button"><i class="fas fa-clock"></i> Quick & Easy</button>
+            <button class="filter-button"><i class="fas fa-fire"></i> Popular</button>
+        </div>
+
+        <div class="recipe-grid">
+            <div class="recipe-card">
+                <img src="/api/placeholder/400/320" alt="Vegetarian Pasta">
+                <div class="recipe-content">
+                    <h3>Vegetarian Pasta</h3>
+                    <p>A delicious and light pasta with fresh seasonal vegetables.</p>
+                    <div class="recipe-meta">
+                        <span><i class="far fa-clock"></i> 30 mins</span>
+                        <span><i class="fas fa-user"></i> 4 servings</span>
+                    </div>
+                    <div class="recipe-actions">
+                        <button><i class="far fa-heart"></i> Save</button>
+                        <button><i class="far fa-share-square"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-card">
+                <img src="/api/placeholder/400/320" alt="Quinoa Salad">
+                <div class="recipe-content">
+                    <h3>Quinoa Salad</h3>
+                    <p>A healthy quinoa salad with a tangy citrus dressing.</p>
+                    <div class="recipe-meta">
+                        <span><i class="far fa-clock"></i> 20 mins</span>
+                        <span><i class="fas fa-user"></i> 3 servings</span>
+                    </div>
+                    <div class="recipe-actions">
+                        <button><i class="far fa-heart"></i> Save</button>
+                        <button><i class="far fa-share-square"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-card">
+                <img src="/api/placeholder/400/320" alt="Tofu Stir-Fry">
+                <div class="recipe-content">
+                    <h3>Tofu Stir-Fry</h3>
+                    <p>A quick and spicy tofu stir-fry with Asian vegetables.</p>
+                    <div class="recipe-meta">
+                        <span><i class="far fa-clock"></i> 25 mins</span>
+                        <span><i class="fas fa-user"></i> 2 servings</span>
+                    </div>
+                    <div class="recipe-actions">
+                        <button><i class="far fa-heart"></i> Save</button>
+                        <button><i class="far fa-share-square"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-card">
+                <img src="/api/placeholder/400/320" alt="Lentil Soup">
+                <div class="recipe-content">
+                    <h3>Lentil Soup</h3>
+                    <p>A warm and hearty lentil soup with fresh herbs.</p>
+                    <div class="recipe-meta">
+                        <span><i class="far fa-clock"></i> 45 mins</span>
+                        <span><i class="fas fa-user"></i> 6 servings</span>
+                    </div>
+                    <div class="recipe-actions">
+                        <button><i class="far fa-heart"></i> Save</button>
+                        <button><i class="far fa-share-square"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 SmartChef. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--primary-color)"></i> for food lovers</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartChef - AI Recipe Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --background-color: #f8f9fa;
+            --text-color: #2d3436;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1920/600');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        .hero button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-out 0.6s backwards;
+        }
+
+        .hero button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h3 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .testimonials {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .testimonial-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-item {
+            background: var(--background-color);
+            padding: 2rem;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .testimonial-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-item .quote {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-item .author {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .how-it-works {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .newsletter p {
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .newsletter button {
+            background: var(--text-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter button:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .newsletter form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-utensils"></i> SmartChef</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="generate.html"><i class="fas fa-magic"></i> AI Recipe Generator</a></li>
+                <li><a href="explore.html"><i class="fas fa-search"></i> Explore Recipes</a></li>
+                <li><a href="signup.html"><i class="fas fa-user-plus"></i> Signup</a></li>
+                <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>Transform Your Kitchen with AI</h2>
+        <p>Turn your available ingredients into delicious recipes instantly with our advanced AI technology. No more wasted food or boring meals!</p>
+        <button onclick="window.location.href='generate.html'"><i class="fas fa-magic"></i> Start Creating Recipes</button>
+    </section>
+
+    <section class="features">
+        <h2>Why Choose SmartChef?</h2>
+        <div class="feature-list">
+            <div class="feature-item">
+                <i class="fas fa-brain"></i>
+                <h3>Smart Recipe Generation</h3>
+                <p>Our AI analyzes thousands of recipes to create unique, delicious combinations tailored to your ingredients and preferences.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-heart"></i>
+                <h3>Personalized Nutrition</h3>
+                <p>Get recipes that match your dietary requirements, allergies, and health goals with detailed nutritional information.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-leaf"></i>
+                <h3>Sustainable Cooking</h3>
+                <p>Reduce food waste by creating recipes with ingredients you already have in your kitchen.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <i class="fas fa-list"></i>
+                <h3>1. Input Ingredients</h3>
+                <p>Tell us what ingredients you have available in your kitchen.</p>
+            </div>
+            <div class="step">
+                <i class="fas fa-sliders-h"></i>
+                <h3>2. Set Preferences</h3>
+                <p>Choose your dietary requirements and cooking preferences.</p>
+            </div>
+            <div class="step">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <h3>3. Generate Recipe</h3>
+                <p>Let our AI create the perfect recipe for you in seconds.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <h2>What Our Community Says</h2>
+        <div class="testimonial-list">
+            <div class="testimonial-item">
+                <img src="/api/placeholder/60/60" alt="User Avatar">
+                <p class="quote">"SmartChef has revolutionized my meal planning. I've discovered amazing recipes I never would have thought of myself!"</p>
+                <p class="author">- Sarah Johnson, Food Blogger</p>
+            </div>
+            <div class="testimonial-item">
+                <img src="/api/placeholder/60/60" alt="User Avatar">
+                <p class="quote">"As a busy parent, this app has been a lifesaver. Quick, healthy meals using what I have at home!"</p>
+                <p class="author">- Michael Chen, Parent</p>
+            </div>
+            <div class="testimonial-item">
+                <img src="/api/placeholder/60/60" alt="User Avatar">
+                <p class="quote">"The personalized nutrition features help me stay on track with my fitness goals while enjoying delicious meals."</p>
+                <p class="author">- Emma Davis, Fitness Enthusiast</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <h2>Join Our Culinary Community</h2>
+        <p>Subscribe to receive weekly AI-generated recipe collections, cooking tips, and exclusive features.</p>
+        <form action="/subscribe" method="post">
+            <input type="email" name="email" placeholder="Enter your email address" required>
+            <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>© 2024 SmartChef. All rights reserved. | Made with <i class="fas fa-heart" style="color: var(--primary-color)"></i> for food lovers</p>
+    </footer>
+</body>
+</html>
